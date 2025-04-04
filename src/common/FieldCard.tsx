@@ -12,7 +12,7 @@ interface FieldCardProps {
 const FieldCard: FC<FieldCardProps> = ({ field }) => {
   const initials = getInitials(field.title);
   const content = field.content;
-  const [checked, setChecked] = useState<boolean>(!field.ignore);
+  const [checked, setChecked] = useState<boolean>(!true);
   return (
     <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2">
       <div className="flex items-start gap-3">

@@ -2,7 +2,7 @@ import Button from './button/Button';
 
 const FieldActions = () => {
   return (
-    <div className="p-3 border-t bg-white dark:bg-zinc-900 flex justify-between items-center">
+    <div className="p-3 border-t border-gray-700 bg-white dark:bg-zinc-900 flex justify-between items-center">
       <Button onClick={() => {}} variant="secondary">
         Select All
       </Button>

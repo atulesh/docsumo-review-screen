@@ -10,7 +10,7 @@ const ReviewLayout = () => {
         <section className="w-3/4 h-full overflow-auto">
           <DocumentSection />
         </section>
-        <aside className="w-1/4 flex flex-col h-full border-l bg-white dark:bg-zinc-900">
+        <aside className="w-1/4 flex flex-col h-full border-l border-gray-700 bg-white dark:bg-zinc-900">
           <RightSidebar />
         </aside>
       </div>
