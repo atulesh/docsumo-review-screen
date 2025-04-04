@@ -1,7 +1,5 @@
 const DocumentSection = () => {
-  return (
-    <div>DocumentSection</div>
-  )
+  return <div>DocumentSection</div>
 }
 
 export default DocumentSection

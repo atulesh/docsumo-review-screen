@@ -1,7 +1,5 @@
 const RightSidebar = () => {
-  return (
-    <div>RightSidebar</div>
-  )
+  return <div>RightSidebar</div>
 }
 
 export default RightSidebar
