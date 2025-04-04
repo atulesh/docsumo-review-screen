@@ -1,22 +1,23 @@
-import { getInitials } from '@/utils/utils'
-import { FC } from 'react'
+import { getBadgeColor } from '@/feature/constants';
+import { FC } from 'react';
 
 interface BadgeProps {
-  label: string
-  bgColor?: string
+  label: string;
+  confidence: number;
 }
 
-const Badge: FC<BadgeProps> = ({ label, bgColor }) => {
-  const initials = getInitials(label)
-  const backgroundColor = bgColor || 'bg-blue-500'
+const Badge: FC<BadgeProps> = ({ label, confidence = 0 }) => {
+  const badgeColor = getBadgeColor(confidence);
 
   return (
-    <div
-      className={`w-8 h-8 rounded-full flex items-center justify-center text-white font-semibold text-sm ${backgroundColor}`}
-    >
-      {initials}
-    </div>
-  )
-}
+    <>
+      <div
+        className={`flex items-center justify-center rounded-md text-xs font-semibold text-gray-800 dark:text-gray-100 h-8 w-10 border-l-4 ${badgeColor}`}
+      >
+        {label}
+      </div>
+    </>
+  );
+};
 
-export default Badge
+export default Badge;

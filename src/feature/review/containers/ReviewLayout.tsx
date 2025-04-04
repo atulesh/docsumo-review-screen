@@ -1,6 +1,6 @@
-import DocumentSection from "../components/DocumentSection"
-import RightSidebar from "../components/RightSidebar"
-import TopNavbar from "../components/TopNavbar"
+import DocumentSection from '../components/DocumentSection';
+import RightSidebar from '../components/RightSidebar';
+import TopNavbar from '../components/TopNavbar';
 
 const ReviewLayout = () => {
   return (
@@ -10,12 +10,12 @@ const ReviewLayout = () => {
         <section className="w-3/4 h-full overflow-auto">
           <DocumentSection />
         </section>
-        <aside className="w-1/4 h-full border-1 border-gray-200 dark:border-gray-700 overflow-auto">
+        <aside className="w-1/4 flex flex-col h-full border-l bg-white dark:bg-zinc-900">
           <RightSidebar />
         </aside>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ReviewLayout
+export default ReviewLayout;

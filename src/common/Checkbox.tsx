@@ -1,12 +1,12 @@
-import React, { FC } from 'react'
+import { FC } from 'react';
 
 interface CheckboxProps {
-  id: string
-  label?: string
-  checked: boolean
-  disabled?: boolean
-  onChange: (checked: boolean) => void
-  className?: string
+  id: number;
+  label?: string;
+  checked: boolean;
+  disabled?: boolean;
+  onChange: (checked: boolean) => void;
+  className?: string;
 }
 const Checkbox: FC<CheckboxProps> = ({
   id,
@@ -20,7 +20,7 @@ const Checkbox: FC<CheckboxProps> = ({
     <label className="inline-flex items-center gap-2 cursor-pointer">
       <input
         type="checkbox"
-        id={id}
+        id={String(id)}
         checked={checked}
         onChange={(e) => onChange(e.target.checked)}
         className={`w-4 h-4 accent-blue-600 cursor-pointer ${className}`}
@@ -30,7 +30,7 @@ const Checkbox: FC<CheckboxProps> = ({
       />
       {label && <span className="text-sm">{label}</span>}
     </label>
-  )
-}
+  );
+};
 
-export default Checkbox
+export default Checkbox;
