@@ -57,7 +57,12 @@ export const reviewSlice = createSlice({
       state.hoveredId = action.payload;
     },
     confirmSelection: (state) => {
-      console.log('Submitting:', state.selectedIds);
+      // Todo: Handle field deletion
+      // state.fields = state.fields.filter(
+      //   (field) => !state.selectedIds.includes(field.id),
+      // );
+      state.selectedIds = [];
+      state.hoveredId = null;
     },
   },
 

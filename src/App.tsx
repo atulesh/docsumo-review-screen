@@ -1,8 +1,13 @@
-import ReviewLayout from "./feature/review/containers/ReviewLayout"
+import { ToastContainer } from 'react-toastify';
+import ReviewLayout from './feature/review/containers/ReviewLayout';
 
 function App() {
-
-  return <ReviewLayout />
+  return (
+    <>
+      <ToastContainer position="bottom-right" autoClose={3000} />
+      <ReviewLayout />
+    </>
+  );
 }
 
-export default App
+export default App;
