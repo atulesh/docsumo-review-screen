@@ -1,15 +1,17 @@
 import { ReviewField } from '@/feature/review/types';
 import flattenFields from '@/utils/flattenFields';
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface ReviewState {
   fields: ReviewField[];
+  selectedIds: number[];
   loading: boolean;
   error: string | null;
 }
 
 const initialState: ReviewState = {
   fields: [],
+  selectedIds: [],
   loading: false,
   error: null,
 };
@@ -33,7 +35,26 @@ export const fetchFields = createAsyncThunk<ReviewField[]>(
 export const reviewSlice = createSlice({
   name: 'review',
   initialState,
-  reducers: {},
+  reducers: {
+    toggleSelection: (state, action: PayloadAction<number>) => {
+      const id = action.payload;
+      const index = state.selectedIds.indexOf(id);
+      if (index === -1) {
+        state.selectedIds.push(id);
+      } else {
+        state.selectedIds.splice(index, 1);
+      }
+    },
+    clearSelection: (state) => {
+      state.selectedIds = [];
+    },
+    setSelection: (state, action: PayloadAction<number[]>) => {
+      state.selectedIds = action.payload;
+    },
+    confirmSelection: (state) => {
+      console.log('Submitting:', state.selectedIds);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchFields.pending, (state) => {
@@ -50,3 +71,15 @@ export const reviewSlice = createSlice({
       });
   },
 });
+
+export const {
+  toggleSelection,
+  clearSelection,
+  setSelection,
+  confirmSelection,
+} = reviewSlice.actions;
+
+export const selectFields = (state: { review: ReviewState }) =>
+  state.review.fields;
+export const selectSelectedIds = (state: { review: ReviewState }) =>
+  state.review.selectedIds;

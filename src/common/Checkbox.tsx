@@ -17,7 +17,7 @@ const Checkbox: FC<CheckboxProps> = ({
   className = '',
 }) => {
   return (
-    <label className="inline-flex items-center gap-2 cursor-pointer">
+    <label className="inline-flex items-center gap-2 cursor-pointer select-none">
       <input
         type="checkbox"
         id={String(id)}

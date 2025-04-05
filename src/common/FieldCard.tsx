@@ -1,18 +1,23 @@
 import { ReviewField } from '@/feature/review/types';
 import { getInitials } from '@/utils/utils';
-import { FC, useState } from 'react';
+import { FC } from 'react';
 import Badge from './Badge';
 import Checkbox from './Checkbox';
 import IconButton from './button/IconButton';
 import { MdMoreVert } from 'react-icons/md';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectSelectedIds, toggleSelection } from '@/app/slice/reviewSlice';
 
 interface FieldCardProps {
   field: ReviewField;
 }
 const FieldCard: FC<FieldCardProps> = ({ field }) => {
+  const dispatch = useDispatch();
+  const selectedIds = useSelector(selectSelectedIds);
+
   const initials = getInitials(field.title);
   const content = field.content;
-  const [checked, setChecked] = useState<boolean>(!true);
+
   return (
     <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2">
       <div className="flex items-start gap-3">
@@ -28,8 +33,8 @@ const FieldCard: FC<FieldCardProps> = ({ field }) => {
       </div>
       <div className="flex items-start gap-2">
         <Checkbox
-          checked={checked}
-          onChange={(val) => setChecked(val)}
+          checked={selectedIds.includes(field.id)}
+          onChange={() => dispatch(toggleSelection(field.id))}
           id={field.id}
         />
         <IconButton icon={<MdMoreVert />} title="More" onClick={() => {}} />
