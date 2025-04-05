@@ -6,7 +6,11 @@ import Checkbox from './Checkbox';
 import IconButton from './button/IconButton';
 import { MdMoreVert } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectSelectedIds, toggleSelection } from '@/app/slice/reviewSlice';
+import {
+  hoverField,
+  selectSelectedIds,
+  toggleSelection,
+} from '@/app/slice/reviewSlice';
 
 interface FieldCardProps {
   field: ReviewField;
@@ -19,7 +23,11 @@ const FieldCard: FC<FieldCardProps> = ({ field }) => {
   const content = field.content;
 
   return (
-    <div className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2">
+    <div
+      onMouseEnter={() => dispatch(hoverField(field.id))}
+      onMouseLeave={() => dispatch(hoverField(null))}
+      className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2"
+    >
       <div className="flex items-start gap-3">
         <Badge label={initials} confidence={field.content.confidence} />
         <div>

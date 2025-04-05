@@ -5,6 +5,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface ReviewState {
   fields: ReviewField[];
   selectedIds: number[];
+  hoveredId: number | null;
   loading: boolean;
   error: string | null;
 }
@@ -12,6 +13,7 @@ interface ReviewState {
 const initialState: ReviewState = {
   fields: [],
   selectedIds: [],
+  hoveredId: null,
   loading: false,
   error: null,
 };
@@ -51,10 +53,14 @@ export const reviewSlice = createSlice({
     setSelection: (state, action: PayloadAction<number[]>) => {
       state.selectedIds = action.payload;
     },
+    hoverField: (state, action: PayloadAction<number | null>) => {
+      state.hoveredId = action.payload;
+    },
     confirmSelection: (state) => {
       console.log('Submitting:', state.selectedIds);
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchFields.pending, (state) => {
@@ -76,10 +82,13 @@ export const {
   toggleSelection,
   clearSelection,
   setSelection,
+  hoverField,
   confirmSelection,
 } = reviewSlice.actions;
 
 export const selectFields = (state: { review: ReviewState }) =>
   state.review.fields;
+export const selectHoveredId = (state: { review: ReviewState }) =>
+  state.review.hoveredId;
 export const selectSelectedIds = (state: { review: ReviewState }) =>
   state.review.selectedIds;

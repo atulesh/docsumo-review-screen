@@ -1,5 +1,7 @@
-const DocumentSection = () => {
-  return <div>DocumentSection</div>
-}
+import DocumentPreviewer from './document/DocumentPreviewer';
 
-export default DocumentSection
+const DocumentSection = () => {
+  return <DocumentPreviewer />;
+};
+
+export default DocumentSection;
