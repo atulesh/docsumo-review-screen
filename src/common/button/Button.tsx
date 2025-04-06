@@ -6,7 +6,7 @@ interface ButtonProps {
   type?: 'submit' | 'button';
   disabled?: boolean;
   className?: string;
-  variant?: 'primary' | 'secondary' | 'ghost' | 'danger' | 'success';
+  variant?: 'primary' | 'secondary';
 }
 
 const Button: FC<ButtonProps> = ({
@@ -17,13 +17,13 @@ const Button: FC<ButtonProps> = ({
   className = '',
   variant = 'primary',
 }) => {
-  const base = 'px-4 py-2 rounded font-medium transition text-sm';
+  console.log(disabled);
+  const base =
+    'px-4 py-2 rounded font-medium transition text-sm focus:outline-none disabled:cursor-not-allowed';
   const variants = {
-    primary: 'bg-blue-600 text-white hover:bg-blue-700',
-    secondary: 'bg-gray-200 text-gray-800 hover:bg-gray-300',
-    ghost: 'bg-transparent text-gray-700 hover:bg-gray-100 dark:text-gray-300',
-    danger: 'bg-red-600 text-white hover:bg-red-700',
-    success: 'bg-green-600 text-white hover:bg-green-700',
+    primary: 'bg-blue-600 text-white hover:bg-blue-700 disabled:bg-blue-300',
+    secondary:
+      'bg-gray-200 text-gray-800 hover:bg-gray-300 disabled:bg-gray-100 disabled:text-gray-400',
   };
   return (
     <button

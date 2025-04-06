@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   hoverField,
   removeField,
+  selectHoveredId,
   selectSelectedIds,
   toggleSelection,
 } from '@/app/slice/reviewSlice';
@@ -18,15 +19,21 @@ interface FieldCardProps {
 const FieldCard: FC<FieldCardProps> = ({ field }) => {
   const dispatch = useDispatch();
   const selectedIds = useSelector(selectSelectedIds);
+  const hoveredId = useSelector(selectHoveredId);
 
   const initials = getInitials(field.title);
   const content = field.content;
+
+  const isSelected = selectedIds.includes(field.id);
+  const isHovered = hoveredId === field.id;
 
   return (
     <div
       onMouseEnter={() => dispatch(hoverField(field.id))}
       onMouseLeave={() => dispatch(hoverField(null))}
-      className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2 hover:shadow-md hover:bg-gray-100 dark:hover:bg-zinc-700"
+      className={`rounded-lg p-3 flex justify-between items-start gap-2 transition border
+        ${isSelected ? 'bg-blue-100 dark:bg-blue-900 border-blue-600' : ''}
+        ${isHovered && !isSelected ? 'bg-gray-100 dark:bg-zinc-700 border-gray-400' : 'border-transparent'}`}
     >
       <div className="flex items-start gap-3">
         <Badge label={initials} confidence={field.content.confidence} />
