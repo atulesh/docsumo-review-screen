@@ -27,12 +27,16 @@ const FieldCard: FC<FieldCardProps> = ({ field }) => {
   const isSelected = selectedIds.includes(field.id);
   const isHovered = hoveredId === field.id;
 
+  const hoveredClass =
+    isHovered && !isSelected
+      ? 'bg-blue-100 dark:bg-blue-800'
+      : 'border-transparent';
+
   return (
     <div
       onMouseEnter={() => dispatch(hoverField(field.id))}
       onMouseLeave={() => dispatch(hoverField(null))}
-      className={`rounded-lg p-3 flex justify-between items-start gap-2 transition border bg-zinc-100 dark:bg-zinc-700
-        ${isHovered && !isSelected ? 'bg-emerald-100 dark:bg-emerald-800 border-zinc-400 dark:border-zinc-100' : 'border-transparent'}`}
+      className={`rounded-lg p-3 flex justify-between items-start gap-2 transition border bg-zinc-100 dark:bg-zinc-700 ${hoveredClass}`}
     >
       <div className="flex items-start gap-3">
         <Badge label={initials} confidence={field.content.confidence} />
