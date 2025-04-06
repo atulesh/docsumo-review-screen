@@ -3,14 +3,14 @@ import { getInitials } from '@/utils/utils';
 import { FC } from 'react';
 import Badge from './Badge';
 import Checkbox from './Checkbox';
-import IconButton from './button/IconButton';
-import { MdMoreVert } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   hoverField,
+  removeField,
   selectSelectedIds,
   toggleSelection,
 } from '@/app/slice/reviewSlice';
+import MoreMenu from './MoreMenu';
 
 interface FieldCardProps {
   field: ReviewField;
@@ -45,7 +45,7 @@ const FieldCard: FC<FieldCardProps> = ({ field }) => {
           onChange={() => dispatch(toggleSelection(field.id))}
           id={field.id}
         />
-        <IconButton icon={<MdMoreVert />} title="More" onClick={() => {}} />
+        <MoreMenu onRemove={() => dispatch(removeField(field.id))} />
       </div>
     </div>
   );

@@ -56,11 +56,13 @@ export const reviewSlice = createSlice({
     hoverField: (state, action: PayloadAction<number | null>) => {
       state.hoveredId = action.payload;
     },
+    removeField: (state, action: PayloadAction<number>) => {
+      state.fields = state.fields.filter(
+        (field) => field.id !== action.payload,
+      );
+    },
     confirmSelection: (state) => {
-      // Todo: Handle field deletion
-      // state.fields = state.fields.filter(
-      //   (field) => !state.selectedIds.includes(field.id),
-      // );
+      // Todo: Handle confirm action
       state.selectedIds = [];
       state.hoveredId = null;
     },
@@ -88,6 +90,7 @@ export const {
   clearSelection,
   setSelection,
   hoverField,
+  removeField,
   confirmSelection,
 } = reviewSlice.actions;
 

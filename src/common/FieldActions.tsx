@@ -17,7 +17,7 @@ const FieldActions = () => {
   const fields = useSelector(selectFields);
   const selectedIds = useSelector(selectSelectedIds);
 
-  const [showModal, setShowModal] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const allIds = fields.map((field) => field.id);
   const isAllSelected = selectedIds.length === fields.length;
@@ -27,13 +27,9 @@ const FieldActions = () => {
   };
 
   const handleConfirm = () => {
-    setShowModal(true);
-  };
-
-  const confirmAndNotify = () => {
     dispatch(confirmSelection());
     toast.success('Fields confirmed and processed successfully!');
-    setShowModal(false);
+    setIsOpen(false);
   };
 
   return (
@@ -44,17 +40,17 @@ const FieldActions = () => {
         label={isAllSelected ? 'Uncheck All' : 'Select All'}
       />
       <Button
-        onClick={handleConfirm}
-        disabled={selectedIds.length === 0}
+        onClick={() => setIsOpen(true)}
+        disabled={selectedIds.length < 1}
         label="Confirm"
       />
-
-      {showModal && (
-        <ConfirmModal
-          onConfirm={confirmAndNotify}
-          onCancel={() => setShowModal(false)}
-        />
-      )}
+      <ConfirmModal
+        isOpen={isOpen}
+        onClose={() => setIsOpen(false)}
+        onConfirm={handleConfirm}
+        title="Confirm Field Selection"
+        desc="Are you sure you want to confirm the selected fields?"
+      />
     </div>
   );
 };
