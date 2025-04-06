@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from 'react';
+import { FC, useRef, useState } from 'react';
 import { ReviewField } from '@/feature/review/types';
 import { ZoomLevel } from '@/feature/constants';
 import BoundingBox from '@/common/BoundingBox';
@@ -30,7 +30,7 @@ const ImageCanvas: FC<ImageCanvasProps> = ({
   const [fitScale, setFitScale] = useState(1);
   const [contentSize, setContentSize] = useState({ width: 0, height: 0 });
 
-  useEffect(() => {
+  const handleLoad = () => {
     const img = imageRef.current;
     if (img) {
       const containerHeight = containerRef.current?.clientHeight || 1;
@@ -43,7 +43,7 @@ const ImageCanvas: FC<ImageCanvasProps> = ({
       // Fit scale based on image height relative to container height
       setFitScale(containerHeight / img.naturalHeight);
     }
-  }, [imageUrl]);
+  };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const image = imageRef.current;
@@ -95,6 +95,7 @@ const ImageCanvas: FC<ImageCanvasProps> = ({
         <img
           ref={imageRef}
           src={imageUrl}
+          onLoad={handleLoad}
           alt="Document"
           className="w-full h-full object-contain"
         />
