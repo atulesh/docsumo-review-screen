@@ -2,7 +2,17 @@ import { ReviewField } from '@/feature/review/types';
 import flattenFields from '@/utils/flattenFields';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 
+interface PageData {
+  id: number;
+  image: {
+    url: string;
+    height: number;
+    width: number;
+  };
+}
 interface ReviewState {
+  pages: PageData[];
+  currentPage: number;
   fields: ReviewField[];
   selectedIds: number[];
   hoveredId: number | null;
@@ -11,12 +21,32 @@ interface ReviewState {
 }
 
 const initialState: ReviewState = {
+  pages: [],
+  currentPage: 0,
   fields: [],
   selectedIds: [],
   hoveredId: null,
   loading: false,
   error: null,
 };
+
+export const fetchPages = createAsyncThunk<PageData[]>(
+  'review/fetchPages',
+  async () => {
+    try {
+      const response = await fetch('/data/pages.json');
+      const { data } = await response.json();
+      const documents = data?.documents ?? [];
+      const pageList = documents.flatMap(
+        (doc: { pages: PageData[] }) => doc.pages ?? [],
+      );
+      return pageList;
+    } catch (error) {
+      console.error('Error fetching pages:', error);
+      return [];
+    }
+  },
+);
 
 export const fetchFields = createAsyncThunk<ReviewField[]>(
   'review/fetchFields',
@@ -66,6 +96,9 @@ export const reviewSlice = createSlice({
       state.selectedIds = [];
       state.hoveredId = null;
     },
+    setCurrentPage: (state, action: PayloadAction<number>) => {
+      state.currentPage = action.payload;
+    },
   },
 
   extraReducers: (builder) => {
@@ -81,6 +114,9 @@ export const reviewSlice = createSlice({
       .addCase(fetchFields.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message || 'Failed to fetch fields';
+      })
+      .addCase(fetchPages.fulfilled, (state, action) => {
+        state.pages = action.payload;
       });
   },
 });
@@ -92,6 +128,7 @@ export const {
   hoverField,
   removeField,
   confirmSelection,
+  setCurrentPage,
 } = reviewSlice.actions;
 
 export const selectFields = (state: { review: ReviewState }) =>
@@ -100,3 +137,7 @@ export const selectHoveredId = (state: { review: ReviewState }) =>
   state.review.hoveredId;
 export const selectSelectedIds = (state: { review: ReviewState }) =>
   state.review.selectedIds;
+export const selectCurrentPage = (state: { review: ReviewState }) =>
+  state.review.currentPage;
+export const selectPages = (state: { review: ReviewState }) =>
+  state.review.pages;

@@ -1,20 +1,22 @@
-import { fetchFields } from '@/app/slice/reviewSlice';
-import { AppDispatch, RootState } from '@/app/store';
+import { fetchFields, fetchPages } from '@/app/slice/reviewSlice';
+import { AppDispatch } from '@/app/store';
 import FieldActions from '@/common/FieldActions';
 import FieldCard from '@/common/FieldCard';
 import Tab from '@/common/Tab';
 import { TabEnum } from '@/feature/constants';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import usePageFields from '../hook/usePageFields';
 
 const RightSidebar = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { fields, loading } = useSelector((state: RootState) => state.review);
+  const { filteredFields, loading } = usePageFields();
 
   const [tab, setTab] = useState<TabEnum>(TabEnum.REGULAR_FIELDS);
 
   useEffect(() => {
     dispatch(fetchFields());
+    dispatch(fetchPages());
   }, [dispatch]);
 
   const renderFields = () => {
@@ -22,7 +24,9 @@ const RightSidebar = () => {
       return <p className="text-sm text-gray-400">Loading fields...</p>;
     }
     if (tab === TabEnum.REGULAR_FIELDS) {
-      return fields.map((field) => <FieldCard key={field.id} field={field} />);
+      return filteredFields.map((field) => (
+        <FieldCard key={field.id} field={field} />
+      ));
     }
     return (
       <p className="text-sm text-gray-400 italic text-center">

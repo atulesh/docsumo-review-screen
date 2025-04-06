@@ -26,7 +26,7 @@ const FieldCard: FC<FieldCardProps> = ({ field }) => {
     <div
       onMouseEnter={() => dispatch(hoverField(field.id))}
       onMouseLeave={() => dispatch(hoverField(null))}
-      className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2"
+      className="bg-white dark:bg-zinc-800 rounded-lg shadow-sm p-3 flex justify-between items-start gap-2 hover:shadow-md hover:bg-gray-100 dark:hover:bg-zinc-700"
     >
       <div className="flex items-start gap-3">
         <Badge label={initials} confidence={field.content.confidence} />
