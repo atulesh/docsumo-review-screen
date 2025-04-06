@@ -17,7 +17,6 @@ const Button: FC<ButtonProps> = ({
   className = '',
   variant = 'primary',
 }) => {
-  console.log(disabled);
   const base =
     'px-4 py-2 rounded font-medium transition text-sm focus:outline-none disabled:cursor-not-allowed';
   const variants = {
